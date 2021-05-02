@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  web:
+    image: docker-node-hello
+    expose:
+      - "3000"
+    volumes:
+      - ~/projects/docker-node-hello:/app
+    environment:
+      - VIRTUAL_HOST=localhost-1.com,localhost-2.com
+      - VIRTUAL_PORT=3000
